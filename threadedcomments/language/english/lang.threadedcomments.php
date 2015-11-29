@@ -6,10 +6,10 @@ $lang = array(
 // Required for MODULES page
 //----------------------------------------
 
-"threaded_comments_module_name" =>
+"threadedcomments_module_name" =>
 "Threaded Comments",
 
-"threaded_comments_module_description" =>
+"threadedcomments_module_description" =>
 "Enables nested comments in ExpressionEngine",
 
 //----------------------------------------

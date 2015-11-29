@@ -16,25 +16,25 @@ if ( ! defined('BASEPATH'))
     exit('Invalid file request');
 }
 
-require_once PATH_THIRD.'threaded_comments/config.php';
+require_once PATH_THIRD.'threadedcomments/config.php';
 
 
-class Threaded_comments_mcp {
+class Threadedcomments_mcp {
 
-    var $version = THREADED_COMMENTS_ADDON_VERSION;
+    var $version = THREADEDCOMMENTS_ADDON_VERSION;
 
     
     function __construct() { 
         ee()->lang->loadfile('admin_content');  
         ee()->lang->loadfile('comment');  
-        ee()->lang->loadfile('threaded_comments'); 
+        ee()->lang->loadfile('threadedcomments'); 
         
         $sidebar = ee('CP/Sidebar')->make();
-        $fields_menu = $sidebar->addHeader(lang('custom_fields'), ee('CP/URL', 'addons/settings/threaded_comments/comment_fields'))->withButton(lang('new'), ee('CP/URL', 'addons/settings/threaded_comments/edit_comment_field'));
+        $fields_menu = $sidebar->addHeader(lang('custom_fields'), ee('CP/URL', 'addons/settings/threadedcomments/comment_fields'))->withButton(lang('new'), ee('CP/URL', 'addons/settings/threadedcomments/edit_comment_field'));
         $fields_menu->isActive();
         
         ee()->view->header = array(
-			'title' => lang('threaded_comments_module_name')
+			'title' => lang('threadedcomments_module_name')
 		);   
     } 
     
@@ -74,7 +74,7 @@ class Threaded_comments_mcp {
           )
         );
         
-        $table->setNoResultsText('no_custom_fields', 'create', ee('CP/URL', 'addons/settings/threaded_comments/edit_comment_field'));
+        $table->setNoResultsText('no_custom_fields', 'create', ee('CP/URL', 'addons/settings/threadedcomments/edit_comment_field'));
 					
 		   
 		$i = 0;
@@ -90,11 +90,11 @@ class Threaded_comments_mcp {
            $data[$i]['name'] = $row['field_name'];
            $data[$i]['type'] = $fts[$row['field_type']]['name']; 
            $data[$i]['manage']['toolbar_items']['edit'] = array(
-                'href' => ee('CP/URL', 'addons/settings/threaded_comments/edit_comment_field/'.$row['field_id']),
+                'href' => ee('CP/URL', 'addons/settings/threadedcomments/edit_comment_field/'.$row['field_id']),
                 'title' => lang('edit')
               );
            $data[$i]['manage']['toolbar_items']['remove'] = array(
-                'href' => ee('CP/URL', 'addons/settings/threaded_comments/delete_comment_field/'.$row['field_id']),
+                'href' => ee('CP/URL', 'addons/settings/threadedcomments/delete_comment_field/'.$row['field_id']),
                 'title' => lang('delete'),
                 'class' => 'm-link',
                 'rel'   => 'modal-confirm-remove-'.$row['field_id']
@@ -103,7 +103,7 @@ class Threaded_comments_mcp {
               
            $modal_vars = array(
             	'name'      => 'modal-confirm-remove-'.$row['field_id'],
-            	'form_url'	=> ee('CP/URL')->make('addons/settings/threaded_comments/delete_comment_field'),
+            	'form_url'	=> ee('CP/URL')->make('addons/settings/threadedcomments/delete_comment_field'),
                 'checklist' => array(
             		array(
             			'kind' => lang('field'),
@@ -123,7 +123,7 @@ class Threaded_comments_mcp {
         }
         
         $vars = array(
-            'base_url'      => ee('CP/URL', 'addons/settings/threaded_comments/edit_comment_field'),
+            'base_url'      => ee('CP/URL', 'addons/settings/threadedcomments/edit_comment_field'),
             'cp_page_title' => lang('comment_fields'),
             'save_btn_text' => lang('save'),
             'save_btn_text_working' => lang('btn_saving')
@@ -134,9 +134,9 @@ class Threaded_comments_mcp {
         $vars['table'] = $table->viewData();
         
         return array(
-          'body'       => ee('View')->make('threaded_comments:comment_fields')->render($vars),
+          'body'       => ee('View')->make('threadedcomments:comment_fields')->render($vars),
           'breadcrumb' => array(
-            ee('CP/URL', 'addons/settings/threaded_comments/comment_fields')->compile() => lang('threaded_comments_module_name')
+            ee('CP/URL', 'addons/settings/threadedcomments/comment_fields')->compile() => lang('threadedcomments_module_name')
           ),
           'heading'  => lang('comment_fields'),
         );
@@ -160,13 +160,13 @@ class Threaded_comments_mcp {
         {
     		if (strlen(ee()->input->post('field_name')) > 32)
     		{
-                ee('CP/Alert')->makeStandard('threaded_comments')
+                ee('CP/Alert')->makeStandard('threadedcomments')
                           ->asWarning()
                           ->withTitle(lang('error'))
                           ->addToBody(lang('field_name_too_lrg'))
                           ->defer();
                           
-                ee()->functions->redirect(ee('CP/URL', 'addons/settings/threaded_comments/comment_fields')->compile());
+                ee()->functions->redirect(ee('CP/URL', 'addons/settings/threadedcomments/comment_fields')->compile());
     		}
             
             ee()->load->library('api');
@@ -195,7 +195,7 @@ class Threaded_comments_mcp {
     				$str .= $msg.BR;
     			}
                 
-                ee('CP/Alert')->makeStandard('threaded_comments')
+                ee('CP/Alert')->makeStandard('threadedcomments')
                           ->asWarning()
                           ->withTitle(lang('error'))
                           ->addToBody($str)
@@ -205,14 +205,14 @@ class Threaded_comments_mcp {
             {
                 $cp_message = ($edit) ? lang('custom_field_edited') : lang('custom_field_created');
 
-                ee('CP/Alert')->makeStandard('threaded_comments')
+                ee('CP/Alert')->makeStandard('threadedcomments')
                               ->asSuccess()
                               ->withTitle(lang('success'))
                               ->addToBody($cp_message)
                               ->defer();
             }
 
-            ee()->functions->redirect(ee('CP/URL', 'addons/settings/threaded_comments/comment_fields')->compile());
+            ee()->functions->redirect(ee('CP/URL', 'addons/settings/threadedcomments/comment_fields')->compile());
 
         }
 		
@@ -313,7 +313,7 @@ class Threaded_comments_mcp {
         
         // Final view variables we need to render the form
         $vars += array(
-          'base_url' => ee('CP/URL', 'addons/settings/threaded_comments/edit_comment_field'),
+          'base_url' => ee('CP/URL', 'addons/settings/threadedcomments/edit_comment_field'),
           'cp_page_title' => lang('comment_fields'),
           'save_btn_text' => sprintf(lang('btn_save'), lang('field')),
           'save_btn_text_working' => lang('btn_saving')
@@ -352,9 +352,9 @@ class Threaded_comments_mcp {
 		ee()->javascript->compile();
 		
 		return array(
-          'body'       => ee('View')->make('threaded_comments:edit_comment_field')->render($vars),
+          'body'       => ee('View')->make('threadedcomments:edit_comment_field')->render($vars),
           'breadcrumb' => array(
-            ee('CP/URL', 'addons/settings/threaded_comments/comment_fields')->compile() => lang('threaded_comments_module_name')
+            ee('CP/URL', 'addons/settings/threadedcomments/comment_fields')->compile() => lang('threadedcomments_module_name')
           ),
           'heading'  => lang('comment_fields'),
         );
@@ -386,13 +386,13 @@ class Threaded_comments_mcp {
 		ee()->load->dbforge(); 
 		ee()->dbforge->drop_column('comment_data', 'field_id_'.$field_id);
         
-        ee('CP/Alert')->makeStandard('threaded_comments')
+        ee('CP/Alert')->makeStandard('threadedcomments')
                     ->asSuccess()
                     ->withTitle(lang('success'))
                     ->addToBody(lang('field_deleted'))
                     ->defer();
 
-        ee()->functions->redirect(ee('CP/URL', 'addons/settings/threaded_comments/comment_fields')->compile());
+        ee()->functions->redirect(ee('CP/URL', 'addons/settings/threadedcomments/comment_fields')->compile());
     }
     
     

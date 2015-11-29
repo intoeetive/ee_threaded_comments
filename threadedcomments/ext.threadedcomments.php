@@ -15,12 +15,12 @@ if ( ! defined('BASEPATH'))
 	exit('Invalid file request');
 }
 
-require_once PATH_THIRD.'threaded_comments/config.php';
+require_once PATH_THIRD.'threadedcomments/config.php';
 
-class Threaded_comments_ext {
+class Threadedcomments_ext {
 
-	var $name	     	= THREADED_COMMENTS_ADDON_NAME;
-	var $version 		= THREADED_COMMENTS_ADDON_VERSION;
+	var $name	     	= THREADEDCOMMENTS_ADDON_NAME;
+	var $version 		= THREADEDCOMMENTS_ADDON_VERSION;
 	var $description	= '';
 	var $settings_exist	= 'n';
     
@@ -588,7 +588,7 @@ class Threaded_comments_ext {
             }
             
             
-            ee()->subscription->init('threaded_comments', array('entry_id' => $data['entry_id'], 'thread_id' => $data['root_id']), TRUE);
+            ee()->subscription->init('threadedcomments', array('entry_id' => $data['entry_id'], 'thread_id' => $data['root_id']), TRUE);
 
 			if ($data['author_id']!=0)
 			{
@@ -610,7 +610,7 @@ class Threaded_comments_ext {
 
 			$ignore = (ee()->session->userdata('member_id') != 0) ? ee()->session->userdata('member_id') : ee()->input->post('email');
             
-			ee()->subscription->init('threaded_comments', array('entry_id' => $data['entry_id'], 'thread_id' => $data['root_id']), TRUE);
+			ee()->subscription->init('threadedcomments', array('entry_id' => $data['entry_id'], 'thread_id' => $data['root_id']), TRUE);
 			$thread_subscriptions = ee()->subscription->get_subscriptions($ignore);
 			$thread_recipients = ee()->comment_model->fetch_email_recipients($data['entry_id'], $thread_subscriptions);
             
@@ -628,7 +628,7 @@ class Threaded_comments_ext {
 
 			if (count($thread_recipients) > 0)
 			{
-				$action_id  = ee()->functions->fetch_action_id('Threaded_comments', 'delete_thread_notification');
+				$action_id  = ee()->functions->fetch_action_id('Threadedcomments', 'delete_thread_notification');
                 
                 $query = ee()->db->select('channel_titles.title, channel_titles.url_title,
         						channels.channel_title, channels.comment_url, channels.channel_url'

@@ -17,7 +17,7 @@ if ( ! defined('BASEPATH'))
 }
 
 
-class Threaded_comments {
+class Threadedcomments {
 
     var $return_data	= ''; 		
     
@@ -33,7 +33,7 @@ class Threaded_comments {
     function __construct()
     {        
         ee()->lang->loadfile('comment');  
-        ee()->lang->loadfile('threaded_comments');
+        ee()->lang->loadfile('threadedcomments');
     }
     
     
@@ -53,7 +53,7 @@ class Threaded_comments {
 		ee()->lang->loadfile('comment');
 
 		ee()->load->library('subscription');
-		ee()->subscription->init('threaded_comments', array('subscription_id' => $id), TRUE);
+		ee()->subscription->init('threadedcomments', array('subscription_id' => $id), TRUE);
 		ee()->subscription->unsubscribe('', $hash);
 
 		$data = array(

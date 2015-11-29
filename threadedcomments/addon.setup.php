@@ -6,6 +6,6 @@ return array(
       'name'            => 'Threaded Comments',
       'description'     => 'Enables nested commenting and custom comment fields',
       'version'         => '3.0.0',
-      'namespace'       => 'Intoeetive\ThreadedComments',
+      'namespace'       => 'Intoeetive\Threadedcomments',
       'settings_exist'  => TRUE,
 );

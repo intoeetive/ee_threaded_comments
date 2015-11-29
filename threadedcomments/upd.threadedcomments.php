@@ -15,11 +15,11 @@ if ( ! defined('BASEPATH'))
     exit('Invalid file request');
 }
 
-require_once PATH_THIRD.'threaded_comments/config.php';
+require_once PATH_THIRD.'threadedcomments/config.php';
 
-class Threaded_comments_upd {
+class Threadedcomments_upd {
 
-    var $version = THREADED_COMMENTS_ADDON_VERSION;
+    var $version = THREADEDCOMMENTS_ADDON_VERSION;
     
     function __construct() { 
 
@@ -67,15 +67,15 @@ class Threaded_comments_upd {
 		ee()->dbforge->add_field($fields);
 		ee()->dbforge->add_key('subscription_id', TRUE);
 		ee()->dbforge->add_key(array('entry_id', 'member_id', 'thread_id'));
-		ee()->dbforge->create_table('threaded_comments_subscriptions');
+		ee()->dbforge->create_table('threadedcomments_subscriptions');
         
         
         $settings = array();
-        $data = array( 'module_name' => 'Threaded_comments' , 'module_version' => $this->version, 'has_cp_backend' => 'y', 'settings'=> serialize($settings) ); 
+        $data = array( 'module_name' => 'Threadedcomments' , 'module_version' => $this->version, 'has_cp_backend' => 'y', 'settings'=> serialize($settings) ); 
         ee()->db->insert('modules', $data); 
         
         $data = array(
-			'class'		=> 'Threaded_comments' ,
+			'class'		=> 'Threadedcomments' ,
 			'method'	=> 'delete_thread_notification'
 		);
 
@@ -91,18 +91,18 @@ class Threaded_comments_upd {
         ee()->load->dbforge(); 
         
         ee()->db->select('module_id'); 
-        $query = ee()->db->get_where('modules', array('module_name' => 'Threaded_comments')); 
+        $query = ee()->db->get_where('modules', array('module_name' => 'Threadedcomments')); 
         
         ee()->db->where('module_id', $query->row('module_id')); 
         ee()->db->delete('module_member_groups'); 
         
-        ee()->db->where('module_name', 'Threaded_comments'); 
+        ee()->db->where('module_name', 'Threadedcomments'); 
         ee()->db->delete('modules'); 
         
-        ee()->db->where('class', 'Threaded_comments'); 
+        ee()->db->where('class', 'Threadedcomments'); 
         ee()->db->delete('actions'); 
         
-        ee()->dbforge->drop_table('threaded_comments_subscriptions');
+        ee()->dbforge->drop_table('threadedcomments_subscriptions');
         
         return TRUE; 
     } 
@@ -112,7 +112,7 @@ class Threaded_comments_upd {
 		if (version_compare($current, '3.0.0', '<'))
         {
             $data = array('has_cp_backend' => 'y'); 
-            ee()->db->where('module_name', 'Threaded_comments'); 
+            ee()->db->where('module_name', 'Threadedcomments'); 
             ee()->db->update('modules', $data);
             
             
@@ -130,10 +130,10 @@ class Threaded_comments_upd {
     		ee()->dbforge->add_field($fields);
     		ee()->dbforge->add_key('subscription_id', TRUE);
     		ee()->dbforge->add_key(array('entry_id', 'member_id', 'thread_id'));
-    		ee()->dbforge->create_table('threaded_comments_subscriptions');
+    		ee()->dbforge->create_table('threadedcomments_subscriptions');
             
             $data = array(
-    			'class'		=> 'Threaded_comments' ,
+    			'class'		=> 'Threadedcomments' ,
     			'method'	=> 'delete_thread_notification'
     		);
     
