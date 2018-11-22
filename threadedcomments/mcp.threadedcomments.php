@@ -567,7 +567,9 @@ class Threadedcomments_mcp {
 
 		foreach($fts as $key => $attr)
 		{
-			// Global settings
+			if (in_array($key, array('text', 'textarea')))
+            {
+            // Global settings
 			$settings = unserialize(base64_decode($fts[$key]['settings']));
 			
 			$settings['field_type'] = $key;
@@ -586,6 +588,7 @@ class Threadedcomments_mcp {
 			{
 				$vars['field_type_tables'][$key] = ee()->table->rows;
 			}
+            }
 		}
 
 		asort($vars['field_type_options']);	// sort by title

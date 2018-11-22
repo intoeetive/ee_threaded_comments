@@ -65,6 +65,10 @@ Displayed if the current comment has sub-comments under it (is starting the thre
 
 Displayed when the thread need to be closed.
 
+##### comment_total
+
+Total number of comments for the entry ({total_results} is now resembling number of threads)
+
 ##### parent_id
 
 ID of comment to which the current comment is reply. Zero for root level comments.
@@ -173,6 +177,10 @@ Any custom comment fields created in add-on's control panel and available for su
 ### 3.0.0
 
 - Rewrite for ExpressionEngine 3.1.0
+
+### 3.0.4
+
+- Fix display of {url_as_author} variables on EE 4
 
 ## License
 

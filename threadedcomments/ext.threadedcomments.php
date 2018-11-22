@@ -248,14 +248,20 @@ class Threadedcomments_ext {
         foreach ($results_orig as $i => $row)
         {
             $result_ids[] = $row['comment_id'];
-        }
-        ee()->db->select('comments.comment_id, comments.entry_id, comments.channel_id, comments.author_id, comments.name, comments.email, comments.url, comments.location AS c_location, comments.ip_address, comments.comment_date, comments.edit_date, comments.comment, comments.site_id AS comment_site_id,
+		}
+		
+        $select = 'comments.comment_id, comments.entry_id, comments.channel_id, comments.author_id, comments.name, comments.email, comments.url, comments.location AS c_location, comments.ip_address, comments.comment_date, comments.edit_date, comments.comment, comments.site_id AS comment_site_id,
             parent_id, root_id, level,
-			members.username, members.group_id, members.location, members.occupation, members.interests, members.aol_im, members.yahoo_im, members.msn_im, members.icq, members.group_id, members.member_id, members.signature, members.sig_img_filename, members.sig_img_width, members.sig_img_height, members.avatar_filename, members.avatar_width, members.avatar_height, members.photo_filename, members.photo_width, members.photo_height,
+			members.username, members.group_id, ';
+        if (version_compare(APP_VER, '4.0.0', '<'))
+        {
+            $select .= 'members.location, members.occupation, members.interests, members.aol_im, members.yahoo_im, members.msn_im, members.icq, ';
+        }
+        $select .= 'members.group_id, members.member_id, members.signature, members.sig_img_filename, members.sig_img_width, members.sig_img_height, members.avatar_filename, members.avatar_width, members.avatar_height, members.photo_filename, members.photo_width, members.photo_height,
 			member_data.*,
 			channel_titles.title, channel_titles.url_title, channel_titles.author_id AS entry_author_id, channel_titles.allow_comments, channel_titles.comment_expiration_date,
-			channels.comment_text_formatting, channels.comment_html_formatting, channels.comment_allow_img_urls, channels.comment_auto_link_urls, channels.channel_url, channels.comment_url, channels.channel_title, channels.channel_name AS channel_short_name, channels.comment_system_enabled'
-		);
+			channels.comment_text_formatting, channels.comment_html_formatting, channels.comment_allow_img_urls, channels.comment_auto_link_urls, channels.channel_url, channels.comment_url, channels.channel_title, channels.channel_name AS channel_short_name, channels.comment_system_enabled';
+        ee()->db->select($select);
 
 		ee()->db->join('channels',			'comments.channel_id = channels.channel_id',	'left');
 		ee()->db->join('channel_titles',	'comments.entry_id = channel_titles.entry_id',	'left');
@@ -268,7 +274,8 @@ class Threadedcomments_ext {
 		$query = ee()->db->get('comments');
         if ($query->num_rows() > 0)
         {
-            $results_orig = array_merge($results_orig, $query->result_array());
+			
+			$results_orig = array_merge($results_orig, $query->result_array());
         }
         
         //for each of the root comments, fetch children
@@ -291,7 +298,15 @@ class Threadedcomments_ext {
             if ($row['level']>$max_levels)
             {
                 $max_levels = $row['level'];
-            }
+			}
+			
+			if (!isset($row['url_as_author']))
+			{
+				$row['url_as_author'] = $this->getAuthorUrl($row, $row['url']);
+				$row['url_or_email'] = ($row['url']) ?: $row['email'];
+				$row['url_or_email_as_author'] = $this->getAuthorUrl($row, $row['url'], TRUE);
+				$row['url_or_email_as_link'] = $this->getAuthorUrl($row, $row['url'], TRUE, FALSE);
+			}
             
             $results_orig[$i] = $row;
          }
@@ -361,6 +376,8 @@ class Threadedcomments_ext {
         foreach ($results as $idx => $row)
         {
             $count++;
+            
+            $row['comment_total'] = $total_comments;
             
       		ee()->db->select($custom_fields_data_sql_what);
     		ee()->db->from('comment_data');
@@ -794,9 +811,9 @@ class Threadedcomments_ext {
 			$cust_data['site_id'] = $data['site_id'];
 
 			ee()->db->insert('comment_data', $cust_data);
+            $data = array_merge($data, $cust_data);
 		}
     	
-        $data = array_merge($data, $cust_data);
         return $data;
         
     }
@@ -967,7 +984,29 @@ class Threadedcomments_ext {
 		
     }
 
-  
+	/**
+	 * Get Author URLs
+	 *
+	 * @param  string  $url The URL to use
+	 * @param  boolean $fallback_to_email Whether to fallback to email if the URL is empty
+	 * @param  boolean $use_name_in_link  Whether to use the user's name as the visible part of the link or just the URL/Email
+	 * @return string parsed author URL variable
+	 */
+	private function getAuthorUrl($comment, $url, $fallback_to_email = FALSE, $use_name_in_link = TRUE)
+	{
+		if ($url)
+		{
+			$label = ($use_name_in_link) ? $comment['name'] : $url;
+			return '<a href="'.$url.'">'.$label.'</a>';
+		}
+		elseif ($fallback_to_email && $comment['email'])
+		{
+			$label = ($use_name_in_link) ? $comment['name'] : $comment['email'];
+			return ee()->typography->encode_email($comment['email'], $label);
+		}
+
+		return $comment['name'];
+	}
 
 }
 // END CLASS
