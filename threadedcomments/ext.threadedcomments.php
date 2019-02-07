@@ -250,7 +250,7 @@ class Threadedcomments_ext {
             $result_ids[] = $row['comment_id'];
 		}
 		
-        $select = 'comments.comment_id, comments.entry_id, comments.channel_id, comments.author_id, comments.name, comments.email, comments.url, comments.location AS c_location, comments.ip_address, comments.comment_date, comments.edit_date, comments.comment, comments.site_id AS comment_site_id,
+        $select = 'comments.comment_id, comments.entry_id, comments.channel_id, comments.author_id, comments.name, comments.email, comments.url, comments.location AS c_location, comments.ip_address, comments.comment_date, comments.edit_date, comments.comment, comments.site_id AS comment_site_id, comments.status,
             parent_id, root_id, level,
 			members.username, members.group_id, ';
         if (version_compare(APP_VER, '4.0.0', '<'))
@@ -298,7 +298,22 @@ class Threadedcomments_ext {
             if ($row['level']>$max_levels)
             {
                 $max_levels = $row['level'];
-			}
+      }
+      
+      switch ($row['status'])
+      {
+        case 'o':
+          $row['status'] = 'open';
+          break;
+        case 'p':
+          $row['status'] = 'pending';
+          break;
+        case 'c':
+          $row['status'] = 'closed';
+          break;
+        default:
+          break;
+      }
 			
 			if (!isset($row['url_as_author']))
 			{
