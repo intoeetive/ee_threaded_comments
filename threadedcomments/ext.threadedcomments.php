@@ -252,12 +252,18 @@ class Threadedcomments_ext {
 		
         $select = 'comments.comment_id, comments.entry_id, comments.channel_id, comments.author_id, comments.name, comments.email, comments.url, comments.location AS c_location, comments.ip_address, comments.comment_date, comments.edit_date, comments.comment, comments.site_id AS comment_site_id, comments.status,
             parent_id, root_id, level,
-			members.username, members.group_id, ';
+			members.username, ';
         if (version_compare(APP_VER, '4.0.0', '<'))
         {
             $select .= 'members.location, members.occupation, members.interests, members.aol_im, members.yahoo_im, members.msn_im, members.icq, ';
-        }
-        $select .= 'members.group_id, members.member_id, members.signature, members.sig_img_filename, members.sig_img_width, members.sig_img_height, members.avatar_filename, members.avatar_width, members.avatar_height, members.photo_filename, members.photo_width, members.photo_height,
+		}
+		if (version_compare(APP_VER, '6.0', '>='))
+        {
+            $select .= 'members.role_id AS group_id, ';
+        } else {
+			$select .= 'members.group_id, ';
+		}
+        $select .= 'members.member_id, members.signature, members.sig_img_filename, members.sig_img_width, members.sig_img_height, members.avatar_filename, members.avatar_width, members.avatar_height, members.photo_filename, members.photo_width, members.photo_height,
 			member_data.*,
 			channel_titles.title, channel_titles.url_title, channel_titles.author_id AS entry_author_id, channel_titles.allow_comments, channel_titles.comment_expiration_date,
 			channels.comment_text_formatting, channels.comment_html_formatting, channels.comment_allow_img_urls, channels.comment_auto_link_urls, channels.channel_url, channels.comment_url, channels.channel_title, channels.channel_name AS channel_short_name, channels.comment_system_enabled';

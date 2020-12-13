@@ -94,7 +94,7 @@ class Threadedcomments_upd {
         $query = ee()->db->get_where('modules', array('module_name' => 'Threadedcomments')); 
         
         ee()->db->where('module_id', $query->row('module_id')); 
-        ee()->db->delete('module_member_groups'); 
+        ee()->db->delete(version_compare(APP_VER, '6.0', '>=') ? 'module_member_roles' : 'module_member_groups');
         
         ee()->db->where('module_name', 'Threadedcomments'); 
         ee()->db->delete('modules'); 

@@ -1,6 +1,6 @@
 # Threaded Comments
 
-Threaded Comment add-on for ExpressionEngine 3 enables nested comments on top of native Comment module and also provides custom comment fields.
+Threaded Comment add-on for ExpressionEngine versions 3, 4, 5 and 6 enables nested comments on top of native Comment module and also provides custom comment fields.
 
 ## Requirements
 
@@ -174,18 +174,18 @@ Any custom comment fields created in add-on's control panel and available for su
 
 ## Changelog
 
-### 3.0.0
+### 3.1.0
 
-- Rewrite for ExpressionEngine 3.1.0
+- EE6 compatibility release
 
 ### 3.0.4
 
 - Fix display of {url_as_author} variables on EE 4
 
+### 3.0.0
+
+- Rewrite for ExpressionEngine 3.1.0
+
 ## License
 
 The purchase of the add-on grants you to use it on single production installation of ExpressionEngine. Should you be willing to use it on several production websites, you should purchase additional licenses. The full license agreement is available [here](http://www.intoeetive.com/docs/license.html)
-
-## Support
-
-Should you have any questions, please email support@intoeetive.com (for official support) or ask questions on EE StackOverflow (for community support)
