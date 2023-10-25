@@ -350,9 +350,21 @@ class Threadedcomments_ext {
             $traverse = array_reverse($traverse);
             for ($t=0; $t<=$max_levels; $t++)
             {
-                if ($t == 0 && $row['parent_id'] == 0) {
-                    //preserve original order for root comments
-                    $traverse[$t] = $i;
+                if ($t == 0) {
+                    if ($row['parent_id'] == 0) {
+                        //preserve original order for root comments
+                        $traverse[$t] = $i;
+                        $row['sort_index'] = $i;
+                     } else {
+                         // attach replies to the roots
+                         foreach ($results as $idx => $result) { 
+                             if ($row['parent_id'] == $result['comment_id'] ) {
+                                $parent_idx = $idx;
+                                break;
+                             }
+                        }
+                        $traverse[$t] = $results[$parent_idx]['sort_index'];
+                     }
                 }
                 if (!isset($traverse[$t])) $traverse[$t] = "0";
                 $idx .= '_'.str_pad($traverse[$t], 8, "0", STR_PAD_LEFT);

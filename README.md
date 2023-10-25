@@ -1,10 +1,18 @@
 # Threaded Comments
 
-Threaded Comment add-on for ExpressionEngine versions 3, 4, 5 and 6 enables nested comments on top of native Comment module and also provides custom comment fields.
+Threaded Comment add-on for ExpressionEngine versions 3, 4, 5, 6 and 7 enables nested comments on top of native Comment module and also provides custom comment fields.
+
+## #StandWithUkraine
+
+This add-on is provided free of charge, however I would like to use the opportunity to ask you to support Ukraine in its fight for freedom and democracy. If you use this add-on in commercial projects, please consider donating to [Hospitaliers](https://www.hospitallers.life/needs-hospitallers#pay-pal-2), [Come Back Alive](https://savelife.in.ua/en/donate-en/) or any other charity that helps Ukraine.
 
 ## Requirements
 
 ExpressionEngine 3.1.0 or later
+
+## Installation
+
+Copy the files into `/system/user/addons/threadedcomments/` folder on your server. Then wisit Add-Ons section in ExpressionEngine Control Panel and click Install next to Threaded Comments.
 
 ## Settings
 
@@ -171,21 +179,12 @@ If the field is submitted with value `yes`, the user will be subscribed to email
 
 Any custom comment fields created in add-on's control panel and available for submission with the form using their short names.
 
+## MIT License
 
-## Changelog
+Copyright 2023 Yuri Salimovskiy
 
-### 3.1.0
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-- EE6 compatibility release
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-### 3.0.4
-
-- Fix display of {url_as_author} variables on EE 4
-
-### 3.0.0
-
-- Rewrite for ExpressionEngine 3.1.0
-
-## License
-
-The purchase of the add-on grants you to use it on single production installation of ExpressionEngine. Should you be willing to use it on several production websites, you should purchase additional licenses. The full license agreement is available [here](http://www.intoeetive.com/docs/license.html)
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
