@@ -421,7 +421,7 @@ class Threadedcomments_mcp {
 		
 		$field_query = ee()->db->get();
 		
-		if ($field_id == '')
+		if (empty($field_id))
 		{
 			$type = 'new';
 
